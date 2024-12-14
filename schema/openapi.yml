@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: PR TIMESアシスト（仮） API
+  description: PR TIMESアシスト（仮） APIの定義書です。
+  version: 1.0.0
+paths:
+  /title-recommend:
+    get:
+      summary: Get title recommendations
+      description: Returns a list of recommended titles.
+      responses:
+        '200':
+          description: A list of recommended titles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+  /judge:
+    post:
+      summary: Judge a title
+      description: Judges the given title and provides a response.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The title to judge.
+                  example: "My Awesome Title"
+              required:
+                - title
+      responses:
+        '200':
+          description: The judgment result for the title.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  result:
+                    type: string
+                    description: The judgment result.
+                    example: "Accepted"
+  /similar:
+    post:
+      summary: Find similar titles
+      description: Finds titles similar to the provided title.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                  description: The title to find similar ones for.
+                  example: "Example Title"
+              required:
+                - title
+      responses:
+        '200':
+          description: A list of similar titles.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
