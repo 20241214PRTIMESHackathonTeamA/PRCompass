@@ -20,8 +20,8 @@ public class ScrapingService {
 //        );
 //        List<SimilarResponse> res = response.getBody();
 
-        var res1 = new SimilarResponse("1", "株式会社ほげ", "2024年12月14日", "Title 1", "http", 10);
-        var res2 = new SimilarResponse("2", "株式会社ふが", "2024年12月14日", "Title 2", "http", 20);
+        var res1 = new SimilarResponse("株式会社ほげ", "2024年12月14日", "Title 1", "https://example.com/xxxx", "/main/html/rd/p/xxxxxxx.xxxxxxxxxx", 10);
+        var res2 = new SimilarResponse("株式会社ふが", "2024年12月14日", "Title 2", "https://example.com/xxxx", "/main/html/rd/p/xxxxxxx.xxxxxxxxxx", 20);
         List<SimilarResponse> res = List.of(res1, res2);
 
         return res;

@@ -70,11 +70,13 @@ components:
     SimilarResponse:
       type: object
       properties:
-        id:
-          type: string
         corporationName:
           type: string
         publishdDatetime:
+          type: string
+        thumbnailUrl:
+          type: string
+        postUrl:
           type: string
         title:
           type: string
