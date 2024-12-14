@@ -56,14 +56,8 @@ components:
       properties:
         id:
           type: string
-        corporationName:
-          type: string
-        publishdDatetime:
-          type: string
         title:
           type: string
-        like_count:
-          type: integer
     JudgeResult:
       type: object
       properties:
