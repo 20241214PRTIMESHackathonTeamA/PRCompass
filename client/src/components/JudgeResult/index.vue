@@ -22,7 +22,7 @@ defineProps({
 import { ref } from 'vue'
 import checkmarkImage from '../../assets/icon_checkmark.png'
 import crossmarkImage from '../../assets/icon_crossmark.png'
-import dropdownImage from '../../assets/icon_nav_under_arrow_.png'
+import dropdownImage from '../../assets/icon_nav_under_arrow.png'
 import loadingImage from '../../assets/loading.svg'
 
 const showDetails = ref(false)
@@ -36,11 +36,15 @@ function toggleDetails() {
   <div class="container">
     <!-- 白い四角 -->
     <div class="rectangle">
+
       <!-- チェックマークまたはバツマーク、ローディング表示 -->
       <div class="icon">
-        <img v-if="loading" :src="loadingImage" alt="Loading Icon" loading="eager" />
+        <img v-if="loading" :src="loadingImage" class="loading-mark-img" alt="Loading Icon" loading="eager" />
         <!-- ローディングスピナー -->
-        <img v-else :src="result?.isValid ? checkmarkImage : crossmarkImage" alt="Result Icon" />
+        <img v-else
+          :src="result?.isValid ? checkmarkImage : crossmarkImage"
+          :class="result?.isValid ? 'check-mark-img': 'cross-mark-img'"
+          alt="Result Icon" />
       </div>
       <!-- テキスト -->
       <span class="text">{{ label }}</span>
@@ -57,42 +61,50 @@ function toggleDetails() {
 </template>
 
 <style scoped>
-/* コンポーネント全体 */
 .container {
-  margin-bottom: 20px; /* コンポーネント間隔 */
-  width: 588.26px; /* 全体の固定幅 */
+  margin-bottom: 20px;
+  width: 588px;
 }
-
 /* 白い四角 */
 .rectangle {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  height: 76.77px;
-  background: #ffffff;
-  border-radius: 7.76295px;
-  padding: 0 10px;
+  height: 76px;
+  background: var(--color-white);
+  border-radius: 7px;
+  padding-left: 20px;
+  padding-right: 10px;
 }
 
-/* チェックマークまたはバツマークのアイコン */
-.icon {
-  flex-shrink: 0;
-  margin-right: 10px; /* テキストとの間隔を設定 */
+.icon .check-mark-img,
+.icon .cross-mark-img,
+.icon .loading-mark-img
+{
+  margin-right: 20px;
 }
-
-.icon img {
-  width: 45.51px;
-  height: 45.51px;
+.icon .check-mark-img {
+  width: 47px;
+  height: 35px;
+}
+.icon .cross-mark-img {
+  width: 30px;
+  height: 30px;
+}
+.icon .loading-mark-img {
+  width: 30px;
+  height: 30px;
 }
 
 /* テキストの位置 */
 .text {
+  width: 100%;
   font-size: 16px;
   color: #000;
   margin-left: 0; /* 左寄せ */
-  flex-grow: 1; /* アイコンの右隣に余白があれば埋める */
   text-align: left; /* テキストを左寄せ */
+  font-weight: bold;
 }
 
 /* ボタンのスタイル */
@@ -121,8 +133,8 @@ function toggleDetails() {
 
 /* ボタン内のアイコン */
 .dropdown-icon {
-  width: 20px; /* アイコンのサイズを固定 */
-  height: 20px;
+  width: 26px; /* アイコンのサイズを固定 */
+  height: 13px;
 }
 
 /* 詳細表示（灰色スペース） */

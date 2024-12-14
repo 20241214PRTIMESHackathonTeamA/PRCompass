@@ -127,5 +127,8 @@ const handleJudgeClick = (inputValue: string) => {
   justify-content: flex-start;
   flex-direction: column;
 }
+.judge-results-wrapper {
+  margin-bottom: 57px;
+}
 
 </style>
