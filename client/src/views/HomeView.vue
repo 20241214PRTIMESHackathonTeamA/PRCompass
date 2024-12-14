@@ -76,6 +76,7 @@ fetchRecommendations()
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  font-weight: bold;
 }
 .logo {
   margin-bottom: 35px;
