@@ -10,6 +10,7 @@ public class SimilarResponse {
     private String corporationName;
     private String publishdDatetime;
     private String title;
+    private String samnailUrl;
     private int like_count;
 }
 

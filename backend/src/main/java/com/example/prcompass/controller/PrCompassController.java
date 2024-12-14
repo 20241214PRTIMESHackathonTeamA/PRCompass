@@ -33,14 +33,12 @@ public class PrCompassController {
 
     @PostMapping("/judge")
     public ResponseEntity<JudgeResult> judgeTitle(@RequestBody String title) {
-        //TODO: 3観点の結果を返す。
         var result = judgeService.getJudgeResult(title);
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/similar")
     public ResponseEntity<List<SimilarResponse>> findSimilarTitles(@RequestBody String title) {
-        //TODO: スクレイピングのやつ呼び出し。
         var result = scrapingService.getSimilar(title);
         return ResponseEntity.ok(result);
     }
