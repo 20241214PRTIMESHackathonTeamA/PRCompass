@@ -1,1 +1,1 @@
-# PRCompass-frontend
+# PRCompassのバックエンドとフロントエンド
