@@ -4,8 +4,10 @@
 	--PRCompass-color: ;
 	--theme-color: #6C67CD;
 	--color-white: #ffffff;
+	--color-black: #000000;
 	--color-text: #000000;
 	--color-background: #ffffff;
+	--color-gray: #B5B5B5;
 }
 
 *,
