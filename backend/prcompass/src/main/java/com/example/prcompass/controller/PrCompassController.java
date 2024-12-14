@@ -10,15 +10,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.Map;
 
 @RestController
 public class PrCompassController {
     @GetMapping("/title-recommend")
     public ResponseEntity<List<RecommendResponse>> getTitleRecommendations() {
         //TODO notionのやつ呼び出し。
-        var res1 = new RecommendResponse("1", "株式会社ほげ", "2024年12月14日", "Title 1", 10);
-        var res2 = new RecommendResponse("2", "株式会社ふが", "2024年12月14日", "Title 2", 20);
+        var res1 = new RecommendResponse("1", "Title 1");
+        var res2 = new RecommendResponse("2", "Title 2");
 
         return ResponseEntity.ok(List.of(res1, res2));
     }
