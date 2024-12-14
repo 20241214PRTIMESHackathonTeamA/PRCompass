@@ -6,9 +6,10 @@ import lombok.Data;
 @Data
 @AllArgsConstructor
 public class SimilarResponse {
-    private String id;
     private String corporationName;
     private String publishdDatetime;
+    private String thumbnailUrl;
+    private String postUrl;
     private String title;
     private int like_count;
 }
