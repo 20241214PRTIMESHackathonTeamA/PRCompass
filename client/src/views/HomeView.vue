@@ -5,6 +5,7 @@ import Introduction from '@/components/Introduction/index.vue'
 import OrLine from '@/components/OrLine/index.vue'
 import InputTitle from '@/components/InputTitle/index.vue'
 import RecommendTitle from '@/components/RecommendTitle/index.vue'
+import LoadingIcon from '@/components/RoadingIcon/index.vue'
 
 const handleInputTitleSubmit = (value: string) => {
   //TODO: request post server
@@ -32,17 +33,26 @@ fetchRecommendations()
       <Logo class="logo" />
     </RouterLink>
     <Introduction class="introduction" />
+    <div class="description">手動で入力</div>
     <InputTitle class="input-title" @submit-input-arrow="handleInputTitleSubmit" />
     <OrLine class="or-line" />
 
+    <div class="description">レコメンド by Notion</div>
+    <!-- 再取得ボタン -->
+    <button @click="fetchRecommendations">
+      Reload Recommendations
+    </button>
+
     <!-- ローディング中の表示 -->
-    <div v-if="titleRecommendStore.loading">Loading...</div>
-
+    <div v-if="titleRecommendStore.loading">
+      <LoadingIcon class="loading-icon" />
+    </div>
     <!-- エラーの表示 -->
-    <div v-else-if="titleRecommendStore.error">Error: {{ titleRecommendStore.error }}</div>
-
+    <div v-else-if="titleRecommendStore.error">
+      Error: {{ titleRecommendStore.error }}
+    </div>
     <!-- 推奨タイトルのリスト -->
-    <div v-else>
+    <div v-else class="recommend-area">
       <div v-for="(topic, index) in titleRecommendStore.recommendations" :key="index">
         <RecommendTitle
           class="recommend-title"
@@ -51,9 +61,6 @@ fetchRecommendations()
         />
       </div>
     </div>
-
-    <!-- 再取得ボタン -->
-    <button @click="fetchRecommendations">Reload Recommendations</button>
   </main>
 </template>
 
@@ -61,10 +68,16 @@ fetchRecommendations()
 .main {
   display: flex;
   margin: 0 auto;
+  width: 680px;
   text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+}
+.description {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
 }
 .logo {
   margin-bottom: 35px;
@@ -78,9 +91,15 @@ fetchRecommendations()
 .or-line {
   margin-bottom: 66px;
 }
-.recommend-title {
+.loading-icon {
+  margin-top: 20px;
   margin-bottom: 20px;
 }
-
+.recommend-area {
+  margin-bottom: 100px;
+}
+.recommend-title {
+  margin-bottom: 40px;
+}
 </style>
 
