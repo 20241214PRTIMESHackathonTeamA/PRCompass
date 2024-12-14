@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import { ref } from "vue"
-import type { Ref } from "vue"
+import { ref } from 'vue'
+import { RouterLink } from 'vue-router'
 
 defineOptions({
   name: 'InputTitle',
@@ -26,13 +26,11 @@ const handleButtonSubmit = () => {
       @keyup.enter="handleButtonSubmit()"
       v-model="inputValue"
     />
-    <button
-      @click="handleButtonSubmit()"
-      type="button"
-      class="arrow-button"
-    >
-      <img src="@/assets/icon_nav_right_arrow_.png" />
-    </button>
+    <RouterLink to="/about" class="arrow-link">
+      <button @click="handleButtonSubmit()" type="button" class="arrow-button">
+        <img src="@/assets/icon_nav_right_arrow_.png" />
+      </button>
+    </RouterLink>
   </div>
 </template>
 
@@ -49,6 +47,7 @@ const handleButtonSubmit = () => {
   overflow: hidden;
   background-color: #fff;
 }
+
 .input-container input {
   height: 100%;
   border: none;
@@ -58,9 +57,16 @@ const handleButtonSubmit = () => {
   color: var(--color-black);
   padding-left: 13px;
 }
+
 .input-container input::placeholder {
   color: var(--color-gray);
 }
+
+.arrow-link {
+  display: flex;
+  height: 100%;
+}
+
 .arrow-button {
   width: 45px;
   height: 100%;
@@ -71,8 +77,8 @@ const handleButtonSubmit = () => {
   align-items: center;
   justify-content: center;
 }
+
 .arrow-button:hover {
   background-color: var(--color-light-gray);
 }
-
 </style>
