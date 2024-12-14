@@ -7,25 +7,31 @@ import InputTitle from '@/components/InputTitle/index.vue'
 import RecommendTitle from '@/components/RecommendTitle/index.vue'
 import LoadingIcon from '@/components/RoadingIcon/index.vue'
 
-const handleInputTitleSubmit = (value: string) => {
-  //TODO: request post server
-  console.log(value)
-}
-
+import router from '@/router'
 import { useTitleRecommendStore } from '@/stores/titleRecommendStore'
+import { useTitleStore } from '@/stores/titleStore'
 
-// Piniaストアを取得
 const titleRecommendStore = useTitleRecommendStore()
-
-// 推奨タイトルを取得する
+// 推奨タイトルを取得する store
 const fetchRecommendations = () => {
   titleRecommendStore.fetchRecommendations()
+}
+
+// Aboutページで使うためのgetterとsetter
+const titleStore = useTitleStore()
+
+const handleInputTitleSubmit = (value: string) => {
+  titleStore.setTitleName(value)
+  router.push('/about')
+}
+const handleRecommendSubmit = (topic: string) => {
+  titleStore.setTitleName(topic)
+  router.push('/about')
 }
 
 // コンポーネントがマウントされた時にデータを取得
 fetchRecommendations()
 </script>
-
 
 <template>
   <main class="main">
@@ -57,7 +63,7 @@ fetchRecommendations()
         <RecommendTitle
           class="recommend-title"
           :topic-name="topic"
-          @submit-recommend-button=""
+          @submit-recommend-button="handleRecommendSubmit(topic)"
         />
       </div>
     </div>
@@ -78,6 +84,7 @@ fetchRecommendations()
   width: 100%;
   display: flex;
   justify-content: flex-start;
+  font-weight: bold;
 }
 .logo {
   margin-bottom: 35px;

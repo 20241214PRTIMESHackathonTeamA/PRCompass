@@ -29,15 +29,13 @@ const handleButtonSubmit = () => {
     <div class="recommend-name">
       {{ props?.topicName }}
     </div>
-    <RouterLink to="/about" class="arrow-link">
-      <button
-        @click="handleButtonSubmit()"
-        type="button"
-        class="arrow-button"
-      >
-        <img src="@/assets/icon_nav_right_arrow_.png" />
-      </button>
-    </RouterLink>
+    <button
+      @click="handleButtonSubmit()"
+      type="button"
+      class="arrow-button"
+    >
+      <img src="@/assets/icon_nav_right_arrow_.png" />
+    </button>
   </div>
 
 </template>
