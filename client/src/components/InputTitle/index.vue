@@ -26,11 +26,9 @@ const handleButtonSubmit = () => {
       @keyup.enter="handleButtonSubmit()"
       v-model="inputValue"
     />
-    <RouterLink to="/about" class="arrow-link">
-      <button @click="handleButtonSubmit()" type="button" class="arrow-button">
-        <img src="@/assets/icon_nav_right_arrow_.png" />
-      </button>
-    </RouterLink>
+    <button @click="handleButtonSubmit()" type="button" class="arrow-button">
+      <img src="@/assets/icon_nav_right_arrow_.png" />
+    </button>
   </div>
 </template>
 
@@ -63,10 +61,10 @@ const handleButtonSubmit = () => {
   color: var(--color-gray);
 }
 
-.arrow-link {
+/*.arrow-link {
   display: flex;
   height: 100%;
-}
+}*/
 
 .arrow-button {
   width: 45px;
