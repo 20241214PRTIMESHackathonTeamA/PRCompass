@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { RouterLink } from 'vue-router'
 
 defineOptions({
   name: 'InputTitle',
@@ -11,10 +10,11 @@ const inputValue = ref('')
 interface Emits {
   (event: 'submit-input-arrow', inputValue: string): void
 }
-
 const emits = defineEmits<Emits>()
 const handleButtonSubmit = () => {
-  emits('submit-input-arrow', inputValue.value)
+  if (inputValue.value) {
+    emits('submit-input-arrow', inputValue.value)
+  }
 }
 </script>
 
