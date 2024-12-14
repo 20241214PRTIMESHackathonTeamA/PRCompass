@@ -52,17 +52,16 @@ const handleButtonSubmit = () => {
   border-radius: 4px;
   overflow: hidden;
   background-color: #fff;
+  justify-content: space-between;
 }
 .recommend-container .recommend-name {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 
   height: 100%;
   border: none;
   outline: none;
   font-size: 16px;
-  flex: 1;
   color: var(--color-black);
   padding-left: 13px;
 }

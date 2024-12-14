@@ -41,6 +41,7 @@ const handleButtonSubmit = () => {
   font-size: 13px;
 
   display: inline-flex;
+  justify-content: space-between;
   align-items: center;
   border: 1px solid #ccc;
   border-radius: 4px;
@@ -53,7 +54,6 @@ const handleButtonSubmit = () => {
   border: none;
   outline: none;
   font-size: 16px;
-  flex: 1;
   color: var(--color-black);
   padding-left: 13px;
 }
