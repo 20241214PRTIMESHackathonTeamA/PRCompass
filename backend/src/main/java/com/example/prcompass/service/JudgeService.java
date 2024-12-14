@@ -18,8 +18,11 @@ public class JudgeService {
 //        );
 //        List<SimilarResponse> res = response.getBody();
 
-
-        var result = new JudgeResult(true, true, true);
+        var result = new JudgeResult(
+                new JudgeResult.ValidationResult(true, "Valid news"),
+                new JudgeResult.ValidationResult(true, "Public decency is maintained"),
+                new JudgeResult.ValidationResult(true, "Legal compliance is maintained")
+        );
         return result;
     }
 
