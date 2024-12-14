@@ -1,74 +1,88 @@
-openapi: 3.0.3
+openapi: 3.0.0
 info:
-  title: PR TIMESアシスト（仮） API
-  description: PR TIMESアシスト（仮） APIの定義書です。
+  title: PR Compass API
   version: 1.0.0
 paths:
   /title-recommend:
     get:
       summary: Get title recommendations
-      description: Returns a list of recommended titles.
       responses:
         '200':
-          description: A list of recommended titles.
+          description: A list of recommended titles
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: string
+                  $ref: '#/components/schemas/RecommendResponse'
   /judge:
     post:
       summary: Judge a title
-      description: Judges the given title and provides a response.
       requestBody:
         required: true
         content:
-          application/json:
+          text/plain:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: The title to judge.
-                  example: "My Awesome Title"
-              required:
-                - title
+              type: string
       responses:
         '200':
-          description: The judgment result for the title.
+          description: The result of judging the title
           content:
             application/json:
               schema:
-                type: object
-                properties:
-                  result:
-                    type: string
-                    description: The judgment result.
-                    example: "Accepted"
+                $ref: '#/components/schemas/JudgeResult'
   /similar:
     post:
       summary: Find similar titles
-      description: Finds titles similar to the provided title.
       requestBody:
         required: true
         content:
-          application/json:
+          text/plain:
             schema:
-              type: object
-              properties:
-                title:
-                  type: string
-                  description: The title to find similar ones for.
-                  example: "Example Title"
-              required:
-                - title
+              type: string
       responses:
         '200':
-          description: A list of similar titles.
+          description: A list of similar titles
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  type: string
+                  $ref: '#/components/schemas/SimilarResponse'
+components:
+  schemas:
+    RecommendResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        corporationName:
+          type: string
+        publishdDatetime:
+          type: string
+        title:
+          type: string
+        like_count:
+          type: integer
+    JudgeResult:
+      type: object
+      properties:
+        result1:
+          type: boolean
+        result2:
+          type: boolean
+        result3:
+          type: boolean
+    SimilarResponse:
+      type: object
+      properties:
+        id:
+          type: string
+        corporationName:
+          type: string
+        publishdDatetime:
+          type: string
+        title:
+          type: string
+        like_count:
+          type: integer
