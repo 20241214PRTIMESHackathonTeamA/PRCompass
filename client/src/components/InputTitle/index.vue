@@ -51,6 +51,7 @@ const handleButtonSubmit = () => {
 
 .input-container input {
   height: 100%;
+  width: 100%;
   border: none;
   outline: none;
   font-size: 16px;
