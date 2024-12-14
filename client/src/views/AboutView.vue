@@ -3,13 +3,15 @@ import { ref } from 'vue'
 import { useJudgeStore } from '@/stores/judgeStore'
 import { useSimilarStore } from '@/stores/similarStore'
 import JudgeResult from '@/components/JudgeResult/index.vue'
+import { useTitleStore } from '@/stores/titleStore';
 
 // Piniaストアを取得
 const similarStore = useSimilarStore()
+const titleStore = useTitleStore()
 
 // Piniaストアを取得
 const judgeStore = useJudgeStore()
-const title = ref('')
+const title = ref(titleStore.getTitleName)
 
 // タイトルを判定する関数
 // 類似タイトルを検索
