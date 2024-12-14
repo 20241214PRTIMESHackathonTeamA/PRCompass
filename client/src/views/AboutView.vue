@@ -2,20 +2,34 @@
 import { ref } from 'vue'
 import { useJudgeStore } from '@/stores/judgeStore'
 import { useSimilarStore } from '@/stores/similarStore'
-import JudgeResult from '@/components/JudgeResult/index.vue'
 import { useTitleStore } from '@/stores/titleStore';
+import JudgeResult from '@/components/JudgeResult/index.vue'
+import JudgeInputTitle from '@/components/JudgeInputTitle/index.vue'
+
 
 // Piniaストアを取得
 const similarStore = useSimilarStore()
-const titleStore = useTitleStore()
+const titleStore = useTitleStore() // global stateから、homeで入力されたtitle取得
 
 // Piniaストアを取得
 const judgeStore = useJudgeStore()
 const title = ref(titleStore.getTitleName)
 
-// タイトルを判定する関数
+interface isDoneStatusObjType {
+  isTitleDone: boolean;
+  isCheckDone: boolean;
+  isSimilarDone: boolean;
+}
+
+const isDoneStatusObj = ref<isDoneStatusObjType>({
+  isTitleDone: false,
+  isCheckDone: false,
+  isSimilarDone: false,
+})
+
 // 類似タイトルを検索
-const handleSearch = () => {
+const handleJudgeClick = (inputValue: string) => {
+  title.value = inputValue
   if (title.value.trim()) {
     judgeStore.judgeTitle(title.value)
     similarStore.fetchSimilarTitles(title.value)
@@ -26,41 +40,41 @@ const handleSearch = () => {
 <template>
   <main class="main">
     <div>
-      <h1>Judge Title</h1>
-
       <!-- 入力フォーム -->
-      <form @submit.prevent="handleSearch">
-        <input v-model="title" placeholder="Enter title to judge" required />
-        <button type="submit" :disabled="judgeStore.loading">
-          {{ judgeStore.loading ? 'Judging...' : 'Judge' }}
-        </button>
-      </form>
+      <h2 class="section-name">テーマを決定</h2>
+      <JudgeInputTitle
+        :already-input="title"
+        @judge-input-title="handleJudgeClick"
+        class="judge-input-title"
+      >
+      </JudgeInputTitle>
 
       <!-- 判定結果の表示 -->
       <div v-if="judgeStore.error" class="error">Error: {{ judgeStore.error }}</div>
 
-      <div class="result">
+      <div class="judge-results-wrapper">
         <!-- 掲載チェックの見出し -->
-        <h2 class="title">掲載チェック</h2>
-        <ul class="judge-results">
-          <JudgeResult
+        <h2 class="section-name">掲載チェック</h2>
+        <div class="judge-results">
+          <JudgeResult class="judge-result"
             :label="'ニュースバリュー'"
             :loading="judgeStore.loading"
             :result="judgeStore.result?.newsValue"
           />
-          <JudgeResult
+          <JudgeResult class="judge-result"
             :label="'公序良俗'"
             :loading="judgeStore.loading"
             :result="judgeStore.result?.publicDecency"
           />
-          <JudgeResult
+          <JudgeResult class="judge-result"
             :label="'法規制'"
             :loading="judgeStore.loading"
             :result="judgeStore.result?.legalCompliance"
           />
-        </ul>
+        </div>
       </div>
     </div>
+
     <div>
       <h1>Find Similar Titles</h1>
 
@@ -88,23 +102,33 @@ const handleSearch = () => {
 </template>
 
 <style scoped>
-/* 掲載チェックの見出し */
-.title {
-  text-align: left;
-  font-weight: bold;
-  margin-bottom: 30px; /* JudgeResultとの間隔を調整 */
-  padding-left: 20px; /* 左端を揃えるためのパディング */
-}
-
-/* JudgeResultの親要素に同じパディングを適用 */
-.judge-results {
-  padding-left: 20px;
-}
-
-/* その他スタイル */
 .main {
   display: flex;
+  margin: 0 auto;
+  width: 650px;
+  text-align: center;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
 }
+
+.section-name {
+  text-align: left;
+  font-weight: bold;
+  margin-top: 112px;
+  margin-bottom: 30px; /* JudgeResultとの間隔を調整 */
+}
+.judge-input-title {
+  display: flex;
+  justify-content: flex-start;
+}
+.judge-results-wrapper .judge-results {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+}
+.judge-results-wrapper {
+  margin-bottom: 57px;
+}
+
 </style>

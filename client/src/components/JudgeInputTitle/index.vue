@@ -2,18 +2,23 @@
 import { ref } from 'vue'
 
 defineOptions({
-  name: 'InputTitle',
+  name: 'JudgeInputTitle',
 })
 
-const inputValue = ref('')
-
 interface Emits {
-  (event: 'submit-input-arrow', inputValue: string): void
+  (event: 'judge-input-title', inputValue: string): void
 }
+interface Props {
+  alreadyInput: string;
+}
+
 const emits = defineEmits<Emits>()
+const props = defineProps<Props>()
+const inputValue = ref(props.alreadyInput)
+
 const handleButtonSubmit = () => {
   if (inputValue.value) {
-    emits('submit-input-arrow', inputValue.value)
+    emits('judge-input-title', inputValue.value)
   }
 }
 </script>
@@ -22,20 +27,19 @@ const handleButtonSubmit = () => {
   <div class="input-container">
     <input
       type="text"
-      placeholder="どんなことがありましたか？"
       @keyup.enter="handleButtonSubmit()"
       v-model="inputValue"
     />
-    <button @click="handleButtonSubmit()" type="button" class="arrow-button">
-      <img src="@/assets/icon_nav_right_arrow_.png" />
+    <button @click="handleButtonSubmit()" type="button" class="judge-button">
+      <img src="@/assets/check-icon-black.png" alt="search icon" width="30px" height="30px">
     </button>
   </div>
 </template>
 
 <style lang="css" scoped>
 .input-container {
-  width: 682px;
-  height: 73px;
+  width: 588px;
+  height: 63px;
   font-size: 13px;
 
   display: inline-flex;
@@ -57,17 +61,8 @@ const handleButtonSubmit = () => {
   padding-left: 13px;
 }
 
-.input-container input::placeholder {
-  color: var(--color-gray);
-}
-
-/*.arrow-link {
-  display: flex;
-  height: 100%;
-}*/
-
-.arrow-button {
-  width: 45px;
+.judge-button {
+  width: 70px;
   height: 100%;
   background: none;
   border: none;
@@ -75,9 +70,13 @@ const handleButtonSubmit = () => {
   display: flex;
   align-items: center;
   justify-content: center;
+  background: var(--color-white);
+  font-size: 15px;
+  border-left: 1px solid var(--color-light-gray);
+}
+.judge-button:hover {
+  color: #fff;
+  background-color: var(--theme-color);
 }
 
-.arrow-button:hover {
-  background-color: var(--color-light-gray);
-}
 </style>
