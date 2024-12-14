@@ -26,7 +26,7 @@ public class PrCompassController {
 
 
     @GetMapping("/title-recommend")
-    public ResponseEntity<List<RecommendResponse>> getTitleRecommendations() {
+    public ResponseEntity<RecommendResponse> getTitleRecommendations() {
         var result = notionService.getRecommendations();
         return ResponseEntity.ok(result);
     }
@@ -40,6 +40,10 @@ public class PrCompassController {
     @PostMapping("/similar")
     public ResponseEntity<List<SimilarResponse>> findSimilarTitles(@RequestBody String title) {
         var result = scrapingService.getSimilar(title);
+        if (result != null && result.size() > 5) {
+            // Collections.shuffle(result);
+            result = result.subList(0, 5);
+        }
         return ResponseEntity.ok(result);
     }
 }

@@ -3,9 +3,10 @@ package com.example.prcompass.controller.response;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 public class RecommendResponse {
-    private String id;
-    private String title;
+    private List<String> newsTopics;
 }

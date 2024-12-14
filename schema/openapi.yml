@@ -12,21 +12,19 @@ paths:
           content:
             application/json:
               schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/RecommendResponse'
+                $ref: '#/components/schemas/RecommendResponse'
   /judge:
     post:
       summary: Judge a title
       requestBody:
         required: true
         content:
-          text/plain:
+          application/json:
             schema:
               type: string
       responses:
         '200':
-          description: The result of judging the title
+          description: The result of the title judgment
           content:
             application/json:
               schema:
@@ -37,7 +35,7 @@ paths:
       requestBody:
         required: true
         content:
-          text/plain:
+          application/json:
             schema:
               type: string
       responses:
@@ -54,19 +52,26 @@ components:
     RecommendResponse:
       type: object
       properties:
-        id:
-          type: string
-        title:
-          type: string
+        newsTopics:
+          type: array
+          items:
+            type: string
     JudgeResult:
       type: object
       properties:
-        result1:
+        newsValue:
+          $ref: '#/components/schemas/ValidationResult'
+        publicDecency:
+          $ref: '#/components/schemas/ValidationResult'
+        legalCompliance:
+          $ref: '#/components/schemas/ValidationResult'
+    ValidationResult:
+      type: object
+      properties:
+        isValid:
           type: boolean
-        result2:
-          type: boolean
-        result3:
-          type: boolean
+        reason:
+          type: string
     SimilarResponse:
       type: object
       properties:
