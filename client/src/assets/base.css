@@ -3,11 +3,12 @@
 	width: 1280px;
 	--PRCompass-color: ;
 	--theme-color: #6C67CD;
-	--color-white: #ffffff;
+	--color-white: #FFFFFF;
 	--color-black: #000000;
 	--color-text: #000000;
-	--color-background: #ffffff;
+	--color-background: #FFFFFF;
 	--color-gray: #B5B5B5;
+	--color-light-gray: #E0E0E0;
 }
 
 *,
