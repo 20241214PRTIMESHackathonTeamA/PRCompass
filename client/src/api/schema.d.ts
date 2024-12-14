@@ -11,10 +11,7 @@ export interface paths {
             path?: never;
             cookie?: never;
         };
-        /**
-         * Get title recommendations
-         * @description Returns a list of recommended titles.
-         */
+        /** Get title recommendations */
         get: {
             parameters: {
                 query?: never;
@@ -24,13 +21,13 @@ export interface paths {
             };
             requestBody?: never;
             responses: {
-                /** @description A list of recommended titles. */
+                /** @description A list of recommended titles */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": string[];
+                        "application/json": components["schemas"]["RecommendResponse"];
                     };
                 };
             };
@@ -52,10 +49,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /**
-         * Judge a title
-         * @description Judges the given title and provides a response.
-         */
+        /** Judge a title */
         post: {
             parameters: {
                 query?: never;
@@ -65,29 +59,17 @@ export interface paths {
             };
             requestBody: {
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The title to judge.
-                         * @example My Awesome Title
-                         */
-                        title: string;
-                    };
+                    "application/json": string;
                 };
             };
             responses: {
-                /** @description The judgment result for the title. */
+                /** @description The result of the title judgment */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": {
-                            /**
-                             * @description The judgment result.
-                             * @example Accepted
-                             */
-                            result?: string;
-                        };
+                        "application/json": components["schemas"]["JudgeResult"];
                     };
                 };
             };
@@ -107,10 +89,7 @@ export interface paths {
         };
         get?: never;
         put?: never;
-        /**
-         * Find similar titles
-         * @description Finds titles similar to the provided title.
-         */
+        /** Find similar titles */
         post: {
             parameters: {
                 query?: never;
@@ -120,23 +99,17 @@ export interface paths {
             };
             requestBody: {
                 content: {
-                    "application/json": {
-                        /**
-                         * @description The title to find similar ones for.
-                         * @example Example Title
-                         */
-                        title: string;
-                    };
+                    "application/json": string;
                 };
             };
             responses: {
-                /** @description A list of similar titles. */
+                /** @description A list of similar titles */
                 200: {
                     headers: {
                         [name: string]: unknown;
                     };
                     content: {
-                        "application/json": string[];
+                        "application/json": components["schemas"]["SimilarResponse"][];
                     };
                 };
             };
@@ -150,7 +123,28 @@ export interface paths {
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: never;
+    schemas: {
+        RecommendResponse: {
+            newsTopics?: string[];
+        };
+        JudgeResult: {
+            newsValue?: components["schemas"]["ValidationResult"];
+            publicDecency?: components["schemas"]["ValidationResult"];
+            legalCompliance?: components["schemas"]["ValidationResult"];
+        };
+        ValidationResult: {
+            isValid?: boolean;
+            reason?: string;
+        };
+        SimilarResponse: {
+            corporationName?: string;
+            publishdDatetime?: string;
+            thumbnailUrl?: string;
+            postUrl?: string;
+            title?: string;
+            like_count?: number;
+        };
+    };
     responses: never;
     parameters: never;
     requestBodies: never;
