@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useJudgeStore } from '@/stores/judgeStore'
-import { useSimilarStore } from '@/stores/similarStore';
+import { useSimilarStore } from '@/stores/similarStore'
+import JudgeResult from '@/components/JudgeResult/index.vue'
 
 // Piniaストアを取得
-const similarStore = useSimilarStore();
+const similarStore = useSimilarStore()
 
 // Piniaストアを取得
 const judgeStore = useJudgeStore()
@@ -15,11 +16,10 @@ const title = ref('')
 const handleSearch = () => {
   if (title.value.trim()) {
     judgeStore.judgeTitle(title.value)
-    similarStore.fetchSimilarTitles(title.value);
+    similarStore.fetchSimilarTitles(title.value)
   }
-};
+}
 </script>
-
 
 <template>
   <main class="main">
@@ -37,23 +37,24 @@ const handleSearch = () => {
       <!-- 判定結果の表示 -->
       <div v-if="judgeStore.error" class="error">Error: {{ judgeStore.error }}</div>
 
-      <div v-else-if="judgeStore.result" class="result">
+      <div class="result">
         <h2>Judgment Results</h2>
         <ul>
-          <li>
-            News Value: {{ judgeStore.result.newsValue?.isValid ? 'Valid' : 'Invalid' }} (Reason:
-            {{ judgeStore.result.newsValue?.reason }})
-          </li>
-          <li>
-            Public Decency:
-            {{ judgeStore.result.publicDecency?.isValid ? 'Valid' : 'Invalid' }} (Reason:
-            {{ judgeStore.result.publicDecency?.reason }})
-          </li>
-          <li>
-            Legal Compliance:
-            {{ judgeStore.result.legalCompliance?.isValid ? 'Valid' : 'Invalid' }} (Reason:
-            {{ judgeStore.result.legalCompliance?.reason }})
-          </li>
+          <JudgeResult
+            :label="'ニュースバリュー'"
+            :loading="judgeStore.loading"
+            :result="judgeStore.result?.newsValue"
+          />
+          <JudgeResult
+            :label="'公序良俗'"
+            :loading="judgeStore.loading"
+            :result="judgeStore.result?.publicDecency"
+          />
+          <JudgeResult
+            :label="'法規制'"
+            :loading="judgeStore.loading"
+            :result="judgeStore.result?.legalCompliance"
+          />
         </ul>
       </div>
     </div>
@@ -90,5 +91,11 @@ const handleSearch = () => {
     display: flex;
     align-items: center;
   }
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 </style>
