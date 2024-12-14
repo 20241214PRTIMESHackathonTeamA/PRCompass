@@ -38,8 +38,9 @@ const handleSearch = () => {
       <div v-if="judgeStore.error" class="error">Error: {{ judgeStore.error }}</div>
 
       <div class="result">
-        <h2>Judgment Results</h2>
-        <ul>
+        <!-- 掲載チェックの見出し -->
+        <h2 class="title">掲載チェック</h2>
+        <ul class="judge-results">
           <JudgeResult
             :label="'ニュースバリュー'"
             :loading="judgeStore.loading"
@@ -84,15 +85,21 @@ const handleSearch = () => {
   </main>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
+<style scoped>
+/* 掲載チェックの見出し */
+.title {
+  text-align: left;
+  font-weight: bold;
+  margin-bottom: 30px; /* JudgeResultとの間隔を調整 */
+  padding-left: 20px; /* 左端を揃えるためのパディング */
 }
 
+/* JudgeResultの親要素に同じパディングを適用 */
+.judge-results {
+  padding-left: 20px;
+}
+
+/* その他スタイル */
 .main {
   display: flex;
   flex-direction: column;
