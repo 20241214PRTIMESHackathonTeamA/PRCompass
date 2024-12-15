@@ -43,9 +43,11 @@ fetchRecommendations(false)
     <InputTitle class="input-title" @submit-input-arrow="handleInputTitleSubmit" />
     <OrLine class="or-line" />
 
-    <div class="description">レコメンド by Notion</div>
-    <!-- 再取得ボタン -->
-    <button class="reload-button" @click="fetchRecommendations(true)">Reload Recommendations</button>
+    <div class="description">
+      レコメンド by Notion
+      <!-- 再取得ボタンを画像に変更 -->
+      <img src="../assets/reload.png" alt="Reload" class="reload-icon" @click="fetchRecommendations(true)" />
+    </div>
 
     <!-- ローディング中の表示 -->
     <div v-if="titleRecommendStore.loading">
@@ -82,6 +84,7 @@ fetchRecommendations(false)
   display: flex;
   justify-content: flex-start;
   font-weight: bold;
+  align-items: center; /* 画像とテキストを縦方向に中央揃え */
 }
 
 .logo {
@@ -113,23 +116,11 @@ fetchRecommendations(false)
   margin-bottom: 40px;
 }
 
-/* 新しいスタイルを追加 */
-.reload-button {
-  background-color: #4CAF50; /* 緑色 */
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
+/* 画像のスタイルを追加 */
+.reload-icon {
+  width: 24px;
+  height: 24px;
+  margin-left: 10px;
   cursor: pointer;
-  border-radius: 12px;
-  transition: background-color 0.3s ease;
-}
-
-.reload-button:hover {
-  background-color: #45a049; /* ホバー時の色 */
 }
 </style>
