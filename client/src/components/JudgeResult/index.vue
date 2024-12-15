@@ -42,8 +42,8 @@ function toggleDetails() {
         <img v-if="loading" :src="loadingImage" class="loading-mark-img" alt="Loading Icon" loading="eager" />
         <!-- ローディングスピナー -->
         <img v-else
-          :src="result?.isValid ? checkmarkImage : crossmarkImage"
-          :class="result?.isValid ? 'check-mark-img': 'cross-mark-img'"
+          :src="result?.valid ? checkmarkImage : crossmarkImage"
+          :class="result?.valid ? 'check-mark-img': 'cross-mark-img'"
           alt="Result Icon" />
       </div>
       <!-- テキスト -->
