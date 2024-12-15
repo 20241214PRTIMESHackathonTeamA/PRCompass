@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -28,8 +29,8 @@ public class PrCompassController {
 
 
     @GetMapping("/title-recommend")
-    public ResponseEntity<RecommendResponse> getTitleRecommendations() {
-        var result = notionService.getRecommendations();
+    public ResponseEntity<RecommendResponse> getTitleRecommendations(@RequestParam(required = false) boolean refresh) {
+        var result = notionService.getRecommendations(refresh);
         return ResponseEntity.ok(result);
     }
 
