@@ -1,5 +1,6 @@
 package com.example.prcompass.controller;
 
+import com.example.prcompass.controller.request.TitleRequest;
 import com.example.prcompass.controller.response.JudgeResult;
 import com.example.prcompass.controller.response.RecommendResponse;
 import com.example.prcompass.controller.response.SimilarResponse;
@@ -35,14 +36,14 @@ public class PrCompassController {
     }
 
     @PostMapping("/judge")
-    public ResponseEntity<JudgeResult> judgeTitle(@RequestBody String title) {
-        var result = judgeService.getJudgeResult(title);
+    public ResponseEntity<JudgeResult> judgeTitle(@RequestBody TitleRequest title) {
+        var result = judgeService.getJudgeResult(title.getTitle());
         return ResponseEntity.ok(result);
     }
 
     @PostMapping("/similar")
-    public ResponseEntity<List<SimilarResponse>> findSimilarTitles(@RequestBody String title) {
-        var result = scrapingService.getSimilar(title);
+    public ResponseEntity<List<SimilarResponse>> findSimilarTitles(@RequestBody TitleRequest title) {
+        var result = scrapingService.getSimilar(title.getTitle());
         if (result != null && result.size() > 5) {
             // Collections.shuffle(result);
             result = result.subList(0, 5);
