@@ -1,11 +1,12 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useJudgeStore } from '@/stores/judgeStore'
 import { useSimilarStore } from '@/stores/similarStore'
 import { useTitleStore } from '@/stores/titleStore';
 import JudgeResult from '@/components/JudgeResult/index.vue'
 import JudgeInputTitle from '@/components/JudgeInputTitle/index.vue'
 import SimilarContentCard from '@/components/SimilarContentCard/index.vue'
+import loadingImg from '@/assets/loading.svg'
 
 // 進捗の丸と線のステータスを管理
 interface StepStatusType {
@@ -27,22 +28,35 @@ const titleStore = useTitleStore() // global stateから、homeで入力され�
 const judgeStore = useJudgeStore()
 const title = ref(titleStore.getTitleName)
 
-// 類似タイトルを検索
-const handleJudgeClick = (inputValue: string) => {
-  title.value = inputValue
-  if (title.value.trim()) {
-    //update green circle status
-    stepStatus.value.isTitleDecided = true
-
-    judgeStore.judgeTitle(title.value).then(() => {
-      stepStatus.value.isJudgeCompleted = true
-    })
-
-    similarStore.fetchSimilarTitles(title.value).then(() => {
-      stepStatus.value.isSimilarTitlesFound = similarStore.similarTitles.length > 0
-    })
-  }
+const resetStatus = () => {
+  stepStatus.value.isTitleDecided = false
+  stepStatus.value.isJudgeCompleted = false
+  stepStatus.value.isSimilarTitlesFound = false
 }
+
+// 類似タイトルを検索
+const handleJudgeClick = (inputValue?: string) => {
+  const currentTitle = inputValue || title.value;
+  if (!currentTitle.trim()) {
+    return; // タイトルが空なら処理しない
+  }
+  resetStatus();
+
+  title.value = currentTitle;
+  stepStatus.value.isTitleDecided = true;
+
+  judgeStore.judgeTitle(currentTitle).then(() => {
+    stepStatus.value.isJudgeCompleted = true;
+  });
+
+  similarStore.fetchSimilarTitles(currentTitle).then(() => {
+    stepStatus.value.isSimilarTitlesFound = similarStore.similarTitles.length > 0;
+  });
+};
+
+onMounted(() => {
+  handleJudgeClick();
+});
 
 </script>
 
@@ -118,6 +132,9 @@ const handleJudgeClick = (inputValue: string) => {
             </div>
           </div>
           <!-- 検索結果がない場合のメッセージ -->
+          <img v-else-if="similarStore.loading"
+            :src="loadingImg"
+            alt="loading"/>
           <div v-else>No similar titles found.</div>
       </div>
     </div>
