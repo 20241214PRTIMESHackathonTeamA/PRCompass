@@ -2,19 +2,19 @@
 import { ref, onMounted } from 'vue'
 import { useJudgeStore } from '@/stores/judgeStore'
 import { useSimilarStore } from '@/stores/similarStore'
-import { useTitleStore } from '@/stores/titleStore';
+import { useTitleStore } from '@/stores/titleStore'
 import JudgeResult from '@/components/JudgeResult/index.vue'
-
 import JudgeInputTitle from '@/components/JudgeInputTitle/index.vue'
 import SimilarContentCard from '@/components/SimilarContentCard/index.vue'
 import EditorRedirectButton from '@/components/EditorRedirectButton/index.vue'
 import loadingImg from '@/assets/loading.svg'
+import Chat from '@/components/Chat/index.vue'
 
 // 進捗の丸と線のステータスを管理
 interface StepStatusType {
-  isTitleDecided: boolean,
-  isJudgeCompleted: boolean,
-  isSimilarTitlesFound: boolean,
+  isTitleDecided: boolean
+  isJudgeCompleted: boolean
+  isSimilarTitlesFound: boolean
 }
 const stepStatus = ref<StepStatusType>({
   isTitleDecided: false,
@@ -38,28 +38,27 @@ const resetStatus = () => {
 
 // 類似タイトルを検索
 const handleJudgeClick = (inputValue?: string) => {
-  const currentTitle = inputValue || title.value;
+  const currentTitle = inputValue || title.value
   if (!currentTitle.trim()) {
-    return; // タイトルが空なら処理しない
+    return // タイトルが空なら処理しない
   }
-  resetStatus();
+  resetStatus()
 
-  title.value = currentTitle;
-  stepStatus.value.isTitleDecided = true;
+  title.value = currentTitle
+  stepStatus.value.isTitleDecided = true
 
   judgeStore.judgeTitle(currentTitle).then(() => {
-    stepStatus.value.isJudgeCompleted = true;
-  });
+    stepStatus.value.isJudgeCompleted = true
+  })
 
   similarStore.fetchSimilarTitles(currentTitle).then(() => {
-    stepStatus.value.isSimilarTitlesFound = similarStore.similarTitles.length > 0;
-  });
-};
+    stepStatus.value.isSimilarTitlesFound = similarStore.similarTitles.length > 0
+  })
+}
 
 onMounted(() => {
-  handleJudgeClick();
-});
-
+  handleJudgeClick()
+})
 </script>
 
 <template>
@@ -83,11 +82,8 @@ onMounted(() => {
         class="judge-input-title"
       >
       </JudgeInputTitle>
-      <div v-if="judgeStore.error" class="error">
-        Error: {{ judgeStore.error }}
-      </div>
+      <div v-if="judgeStore.error" class="error">Error: {{ judgeStore.error }}</div>
     </div>
-
 
     <!-- 掲載チェック -->
     <div class="judge-results-wrapper">
@@ -98,28 +94,30 @@ onMounted(() => {
         -->
         <h2 class="section-name">掲載チェック</h2>
         <div class="judge-results">
-          <JudgeResult class="judge-result"
+          <JudgeResult
+            class="judge-result"
             :label="'ニュースバリュー'"
             :loading="judgeStore.loading"
             :result="judgeStore.result?.newsValue"
           />
-          <JudgeResult class="judge-result"
+          <JudgeResult
+            class="judge-result"
             :label="'公序良俗'"
             :loading="judgeStore.loading"
             :result="judgeStore.result?.publicDecency"
           />
-          <JudgeResult class="judge-result"
+          <JudgeResult
+            class="judge-result"
             :label="'法規制'"
             :loading="judgeStore.loading"
             :result="judgeStore.result?.legalCompliance"
           />
         </div>
       </div>
-
     </div>
 
     <div class="similar-wrapper">
-      <div class="section-margin "></div>
+      <div class="section-margin"></div>
       <div class="step-line third" :class="{ completed: stepStatus.isSimilarTitlesFound }">
         <!--
         <div class="step circle" :class="{ completed: stepStatus.isSimilarTitlesFound }"></div>
@@ -140,16 +138,23 @@ onMounted(() => {
             </div>
           </div>
           <!-- 検索結果がない場合のメッセージ -->
-          <img v-else-if="similarStore.loading"
-            :src="loadingImg"
-            alt="loading"/>
+          <img v-else-if="similarStore.loading" :src="loadingImg" alt="loading" />
           <div v-else>No similar titles found.</div>
+        </div>
       </div>
     </div>
+    <div class="draft-wrapper">
+      <div class="section-margin"></div>
+      <div class="step-line forth">
+        <h2 class="section-name">叩き台を作る</h2>
+        <Chat />
       </div>
-      <EditorRedirectButton
-        class="editor-link-button"
-        buttonText="記事を書いてみる！" url="https://preditor.prtimes.com/"/>
+    </div>
+    <EditorRedirectButton
+      class="editor-link-button"
+      buttonText="記事を書いてみる！"
+      url="https://preditor.prtimes.com/"
+    />
   </main>
 </template>
 
@@ -231,12 +236,19 @@ onMounted(() => {
   justify-content: flex-start;
   width: 565px;
 }
+
+.draft-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  width: 565px;
+  margin-top: 50px;
+}
+
 .similar-content-card {
   margin-bottom: 10px;
 }
 .error {
   color: red;
 }
-
 </style>
 
