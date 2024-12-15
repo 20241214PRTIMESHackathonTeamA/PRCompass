@@ -18,6 +18,7 @@ public class ScrapingService {
         RestTemplate restTemplate = new RestTemplate();
         String url = UriComponentsBuilder.fromHttpUrl(SCRAPING_URL)
                 .queryParam("keyword", title)
+                .queryParam("limit", 10)
                 .toUriString();
         ResponseEntity<List<SimilarResponse>> response = restTemplate.exchange(
                 url,

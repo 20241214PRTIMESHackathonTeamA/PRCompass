@@ -11,6 +11,6 @@ public class SimilarResponse {
     private String thumbnailUrl;
     private String postUrl;
     private String title;
-    private int like_count;
+    private int likeCount;
 }
 
