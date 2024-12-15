@@ -151,6 +151,9 @@ function toggleDetails() {
   max-height: 0;
   overflow: hidden;
   opacity: 0;
+  line-height: 1.8;
+  padding-left: 35px;
+  text-align: left;
 }
 
 .details.show {

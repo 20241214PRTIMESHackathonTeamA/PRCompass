@@ -208,6 +208,9 @@ onMounted(() => {
 .similar-content-card {
   margin-bottom: 10px;
 }
+.error {
+  color: red;
+}
 
 </style>
 
