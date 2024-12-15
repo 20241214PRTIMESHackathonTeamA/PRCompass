@@ -23,10 +23,11 @@ const redirectToUrl = () => {
 
 <style scoped>
 .redirect-button {
-  background-color: #007bff;
+  /*background-color: #007bff;*/
+  background-color: var(--theme-color);
   color: white;
   border: none;
-  padding: 10px 20px;
+  padding: 15px 20px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
