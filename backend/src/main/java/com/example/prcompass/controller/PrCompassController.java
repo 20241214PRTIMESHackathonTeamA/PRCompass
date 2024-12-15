@@ -1,9 +1,12 @@
 package com.example.prcompass.controller;
 
+import com.example.prcompass.controller.request.ChatRequestDTO;
 import com.example.prcompass.controller.request.TitleRequest;
+import com.example.prcompass.controller.response.ChatResponseDTO;
 import com.example.prcompass.controller.response.JudgeResult;
 import com.example.prcompass.controller.response.RecommendResponse;
 import com.example.prcompass.controller.response.SimilarResponse;
+import com.example.prcompass.service.ChatService;
 import com.example.prcompass.service.JudgeService;
 import com.example.prcompass.service.NotionService;
 import com.example.prcompass.service.ScrapingService;
@@ -28,6 +31,8 @@ public class PrCompassController {
     private NotionService notionService;
     @Autowired
     private ScrapingService scrapingService;
+    @Autowired
+    private ChatService chatService;
 
 
     @GetMapping("/title-recommend")
@@ -49,6 +54,16 @@ public class PrCompassController {
             // Collections.shuffle(result);
             result = result.subList(0, 5);
         }
+        return ResponseEntity.ok(result);
+    }
+
+    @PostMapping("/chat")
+    public ResponseEntity<ChatResponseDTO> chat(@RequestBody ChatRequestDTO chatRequest) {
+        // 外部APIにリクエストを送信するための準備
+        var result = chatService.getResponse(chatRequest);
+
+
+        // レスポンスをそのまま返す
         return ResponseEntity.ok(result);
     }
 }
