@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink } from 'vue-router'
 import Logo from '@/components/Logo/index.vue'
 import Introduction from '@/components/Introduction/index.vue'
 import OrLine from '@/components/OrLine/index.vue'
@@ -13,8 +13,8 @@ import { useTitleStore } from '@/stores/titleStore'
 
 const titleRecommendStore = useTitleRecommendStore()
 // 推奨タイトルを取得する store
-const fetchRecommendations = () => {
-  titleRecommendStore.fetchRecommendations()
+const fetchRecommendations = (reload: boolean) => {
+  titleRecommendStore.fetchRecommendations(reload)
 }
 
 // Aboutページで使うためのgetterとsetter
@@ -30,7 +30,7 @@ const handleRecommendSubmit = (topic: string) => {
 }
 
 // コンポーネントがマウントされた時にデータを取得
-fetchRecommendations()
+fetchRecommendations(false)
 </script>
 
 <template>
@@ -45,18 +45,14 @@ fetchRecommendations()
 
     <div class="description">レコメンド by Notion</div>
     <!-- 再取得ボタン -->
-    <button @click="fetchRecommendations">
-      Reload Recommendations
-    </button>
+    <button class="reload-button" @click="fetchRecommendations(true)">Reload Recommendations</button>
 
     <!-- ローディング中の表示 -->
     <div v-if="titleRecommendStore.loading">
       <LoadingIcon class="loading-icon" />
     </div>
     <!-- エラーの表示 -->
-    <div v-else-if="titleRecommendStore.error">
-      Error: {{ titleRecommendStore.error }}
-    </div>
+    <div v-else-if="titleRecommendStore.error">Error: {{ titleRecommendStore.error }}</div>
     <!-- 推奨タイトルのリスト -->
     <div v-else class="recommend-area">
       <div v-for="(topic, index) in titleRecommendStore.recommendations" :key="index">
@@ -80,33 +76,60 @@ fetchRecommendations()
   align-items: center;
   justify-content: center;
 }
+
 .description {
   width: 100%;
   display: flex;
   justify-content: flex-start;
   font-weight: bold;
 }
+
 .logo {
   margin-bottom: 35px;
 }
+
 .introduction {
   margin-bottom: 80px;
 }
+
 .input-title {
   margin-bottom: 66px;
 }
+
 .or-line {
   margin-bottom: 66px;
 }
+
 .loading-icon {
   margin-top: 20px;
   margin-bottom: 20px;
 }
+
 .recommend-area {
   margin-bottom: 100px;
 }
+
 .recommend-title {
   margin-bottom: 40px;
 }
-</style>
 
+/* 新しいスタイルを追加 */
+.reload-button {
+  background-color: #4CAF50; /* 緑色 */
+  border: none;
+  color: white;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+}
+
+.reload-button:hover {
+  background-color: #45a049; /* ホバー時の色 */
+}
+</style>
