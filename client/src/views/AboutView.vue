@@ -4,8 +4,10 @@ import { useJudgeStore } from '@/stores/judgeStore'
 import { useSimilarStore } from '@/stores/similarStore'
 import { useTitleStore } from '@/stores/titleStore';
 import JudgeResult from '@/components/JudgeResult/index.vue'
+
 import JudgeInputTitle from '@/components/JudgeInputTitle/index.vue'
 import SimilarContentCard from '@/components/SimilarContentCard/index.vue'
+import EditorRedirectButton from '@/components/EditorRedirectButton/index.vue'
 import loadingImg from '@/assets/loading.svg'
 
 // 進捗の丸と線のステータスを管理
@@ -145,10 +147,16 @@ onMounted(() => {
       </div>
     </div>
       </div>
+      <EditorRedirectButton
+        class="editor-link-button"
+        buttonText="記事を書いてみる！" url="https://preditor.prtimes.com/"/>
   </main>
 </template>
 
 <style scoped>
+.editor-link-button {
+  margin-top: 80px;
+}
 .back-link {
   width: 100%;
   margin-bottom: 30px;
