@@ -63,6 +63,12 @@ onMounted(() => {
 <template>
   <main class="main">
     <div class="section-margin"></div>
+    <div class="back-link">
+      <RouterLink class="back-router-anchor" to="/">
+        <img src="@/assets/left-arrow.png" class="left-arrow-img" alt="back page" width="12px" height="12px"/>
+         Back
+      </RouterLink>
+    </div>
     <!-- 入力フォーム -->
     <div class="step-line first" :class="{ completed: stepStatus.isTitleDecided }">
       <!--
@@ -143,6 +149,18 @@ onMounted(() => {
 </template>
 
 <style scoped>
+.back-link {
+  width: 100%;
+  margin-bottom: 30px;
+  display: flex;
+  justify-content: flex-start;
+  text-align: left;
+  margin-left: -10px;
+}
+.back-router-anchor {
+  text-decoration: none;
+  color: var(--theme-color);
+}
 .main {
   display: flex;
   margin-inline: auto;
@@ -176,7 +194,7 @@ onMounted(() => {
   border-left: solid 3px var(--color-light-green);
 }
 .section-margin {
-  margin-top: 112px;
+  margin-top: 100px;
 }
 .section-name {
   text-align: left;
