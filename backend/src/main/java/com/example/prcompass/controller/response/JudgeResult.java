@@ -13,7 +13,7 @@ public class JudgeResult {
     @AllArgsConstructor
     @Data
     public static class ValidationResult {
-        private boolean isValid;
+        private boolean valid;
         private String reason;
     }
 }

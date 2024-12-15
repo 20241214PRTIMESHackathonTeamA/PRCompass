@@ -14,7 +14,10 @@ export interface paths {
         /** Get title recommendations */
         get: {
             parameters: {
-                query?: never;
+                query?: {
+                    /** @description cache refresh flag */
+                    refresh?: boolean;
+                };
                 header?: never;
                 path?: never;
                 cookie?: never;
@@ -133,7 +136,7 @@ export interface components {
             legalCompliance?: components["schemas"]["ValidationResult"];
         };
         ValidationResult: {
-            isValid?: boolean;
+            valid?: boolean;
             reason?: string;
         };
         SimilarResponse: {
