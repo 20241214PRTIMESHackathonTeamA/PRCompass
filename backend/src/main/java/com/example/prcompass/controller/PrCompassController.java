@@ -7,6 +7,7 @@ import com.example.prcompass.controller.response.SimilarResponse;
 import com.example.prcompass.service.JudgeService;
 import com.example.prcompass.service.NotionService;
 import com.example.prcompass.service.ScrapingService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -36,7 +37,7 @@ public class PrCompassController {
     }
 
     @PostMapping("/judge")
-    public ResponseEntity<JudgeResult> judgeTitle(@RequestBody TitleRequest title) {
+    public ResponseEntity<JudgeResult> judgeTitle(@RequestBody TitleRequest title) throws JsonProcessingException {
         var result = judgeService.getJudgeResult(title.getTitle());
         return ResponseEntity.ok(result);
     }
