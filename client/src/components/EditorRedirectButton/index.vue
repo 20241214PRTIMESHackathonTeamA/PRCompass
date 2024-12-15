@@ -24,7 +24,7 @@ const redirectToUrl = () => {
 <style scoped>
 .redirect-button {
   /*background-color: #007bff;*/
-  background-color: var(--theme-color);
+  background-color: #18d858;
   color: white;
   border: none;
   padding: 15px 20px;
@@ -39,6 +39,6 @@ const redirectToUrl = () => {
 }
 
 .redirect-button:hover {
-  background-color: #0056b3;
+  background-color: rgba(24, 216, 88, 0.8);
 }
 </style>
