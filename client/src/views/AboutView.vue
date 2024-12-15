@@ -5,6 +5,7 @@ import { useSimilarStore } from '@/stores/similarStore'
 import { useTitleStore } from '@/stores/titleStore';
 import JudgeResult from '@/components/JudgeResult/index.vue'
 import JudgeInputTitle from '@/components/JudgeInputTitle/index.vue'
+import SimilarContentCard from '@/components/SimilarContentCard/index.vue'
 
 // 進捗の丸と線のステータスを管理
 interface StepStatusType {
@@ -47,10 +48,12 @@ const handleJudgeClick = (inputValue: string) => {
 
 <template>
   <main class="main">
-    <div class="steps-wrapper">
-      <div class="section-margin"></div>
-      <!-- 入力フォーム -->
-      <div class="step circle" :class="{ completed: stepStatus.isTitleDecided }"></div>
+    <div class="section-margin"></div>
+    <!-- 入力フォーム -->
+    <div class="step-line first" :class="{ completed: stepStatus.isTitleDecided }">
+      <!--
+        <div class="step circle" :class="{ completed: stepStatus.isTitleDecided }"></div>
+      -->
       <h2 class="section-name">テーマを決定</h2>
       <JudgeInputTitle
         :already-input="title"
@@ -61,12 +64,16 @@ const handleJudgeClick = (inputValue: string) => {
       <div v-if="judgeStore.error" class="error">
         Error: {{ judgeStore.error }}
       </div>
+    </div>
 
 
-      <!-- 掲載チェック -->
-      <div class="judge-results-wrapper">
-        <div class="section-margin"></div>
+    <!-- 掲載チェック -->
+    <div class="judge-results-wrapper">
+      <div class="section-margin"></div>
+      <div class="step-line second" :class="{ completed: stepStatus.isJudgeCompleted }">
+        <!--
         <div class="step circle" :class="{ completed: stepStatus.isJudgeCompleted }"></div>
+        -->
         <h2 class="section-name">掲載チェック</h2>
         <div class="judge-results">
           <JudgeResult class="judge-result"
@@ -87,41 +94,43 @@ const handleJudgeClick = (inputValue: string) => {
         </div>
       </div>
 
-      <div>
-        <div class="section-margin"></div>
-        <div class="step circle" :class="{ completed: stepStatus.isJudgeCompleted }"></div>
-        <h1>Find Similar Titles</h1>
+    </div>
 
+    <div class="similar-wrapper">
+      <div class="section-margin "></div>
+      <div class="step-line third" :class="{ completed: stepStatus.isSimilarTitlesFound }">
+        <!--
+        <div class="step circle" :class="{ completed: stepStatus.isSimilarTitlesFound }"></div>
+        -->
+        <h2 class="section-name">似ている記事</h2>
         <!-- エラーの表示 -->
-        <div v-if="similarStore.error" class="error">Error: {{ similarStore.error }}</div>
-
-        <!-- 類似タイトルのリスト -->
-        <div v-else-if="similarStore.similarTitles.length">
-          <h2>Similar Titles</h2>
-          <ul>
-            <li v-for="(title, index) in similarStore.similarTitles" :key="index">
-              <h3>{{ title.title }}</h3>
-              <p><strong>Corporation:</strong> {{ title.corporationName }}</p>
-              <p><strong>Published:</strong> {{ title.publishdDatetime }}</p>
-              <p><strong>Likes:</strong> {{ title.like_count }}</p>
-              <a :href="title.postUrl" target="_blank">Read More</a>
-            </li>
-          </ul>
-        </div>
-
-        <!-- 検索結果がない場合のメッセージ -->
-        <div v-else>No similar titles found.</div>
+        <div sclass="similar-show-area">
+          <div v-if="similarStore.error" class="error">Error: {{ similarStore.error }}</div>
+          <!-- 類似タイトルのリスト -->
+          <div v-else-if="similarStore.similarTitles.length">
+            <div v-for="(title, index) in similarStore.similarTitles" :key="index">
+              <SimilarContentCard
+                class="similar-content-card"
+                :title="title.title"
+                :thumbnail-url="title.thumbnailUrl"
+                :post-url="title.postUrl"
+              />
+            </div>
+          </div>
+          <!-- 検索結果がない場合のメッセージ -->
+          <div v-else>No similar titles found.</div>
       </div>
     </div>
+      </div>
   </main>
 </template>
 
 <style scoped>
 .main {
   display: flex;
-  margin: 0 auto;
+  margin-inline: auto;
+  margin-bottom: 100px;
   width: 650px;
-  text-align: center;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -141,17 +150,27 @@ const handleJudgeClick = (inputValue: string) => {
   flex-shrink: 0;
   transition: background-color 0.3s;
 }
+.step-line {
+  margin-left: -45px;
+  padding-left: 20px;
+  border-left: solid 3px var(--color-gray);
+}
+.step-line.completed {
+  border-left: solid 3px var(--color-light-green);
+}
 .section-margin {
   margin-top: 112px;
 }
 .section-name {
   text-align: left;
   font-weight: bold;
-  margin-bottom: 30px; /* JudgeResultとの間隔を調整 */
+  max-width: 588px;
+  margin-bottom: 30px;
 }
 .judge-input-title {
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 30px; /* JudgeResultとの間隔を調整 */
 }
 .judge-results-wrapper .judge-results {
   display: flex;
@@ -161,8 +180,16 @@ const handleJudgeClick = (inputValue: string) => {
 .judge-results-wrapper {
   margin-bottom: 57px;
 }
-.completed {
+.circle.completed {
   background-color: var(--color-light-green);
+}
+.similar-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  width: 565px;
+}
+.similar-content-card {
+  margin-bottom: 10px;
 }
 
 </style>
